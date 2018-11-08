@@ -8,7 +8,6 @@
 // Hardware Configuration: N/A
 
 #include "ADC.h"
-#include "FIFO.h"
 #include "Timer.h"
 #include "tm4c123gh6pm.h"
 #include "ST7735.h"
@@ -16,6 +15,8 @@
 
 #define PB7 (*((volatile uint32_t*)0x40005200))
 #define PF2 (*((volatile uint32_t*)0x40025010))
+	
+#define GRAPH_HEIGHT (ST7735_TFTHEIGHT - 20)
 	
 uint8_t CurrentSeconds = 0;
 uint8_t CurrentMinutes = 0;
@@ -56,12 +57,27 @@ void Timer0A_Init(uint32_t reloadValue)
 
 void Timer0A_Handler(void)
 {
+	static uint8_t screenCursor = 0;
+	static int32_t buffer[ST7735_TFTWIDTH] = {0};
+	static int32_t min = 5000;
+	static int32_t max = 1500;
+	
     TIMER0_ICR_R = TIMER_ICR_TATOCINT; // acknowledge timer0A timeout
-	if(fifoFull) return;
+	
+	ST7735_DrawPixel(screenCursor, buffer[screenCursor], ST7735_BLACK);
+	
 	int32_t currentValue = ADC0_InSeq3();
-			
-	if((currentCursor + 1) % FIFO_SIZE == lastFifoValue) fifoFull = true;
-	else FIFO_Push(currentValue);
+	if (currentValue < min)
+		min = currentValue;
+	if (currentValue > max)
+		max = currentValue;
+	
+	currentValue -= min;
+	int32_t range = max - min;
+	int32_t yValue = ST7735_TFTHEIGHT - ((((double)currentValue)/((double)range)) * GRAPH_HEIGHT);
+	buffer[screenCursor] = yValue;
+	ST7735_DrawPixel(screenCursor, yValue, ST7735_BLUE);
+	screenCursor = (screenCursor + 1) % ST7735_TFTWIDTH;
 }
 
 void Timer1_Init(uint32_t reloadValue)

@@ -7,8 +7,9 @@
 // Date of last revision: 11/07/2018
 // Hardware Configuration: N/A
 
+#include "TempData.h"
+
 #include <stdint.h>
-#include "FIFO.h"
 
 int32_t FIFO[FIFO_SIZE] = {-1};
 uint16_t currentCursor = 0;

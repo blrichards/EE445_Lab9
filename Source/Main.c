@@ -34,7 +34,7 @@ int main(void)
 {
 	PLL_Init(Bus80MHz); // 80 MHz
     SYSCTL_RCGCGPIO_R |= 0x32; // activate port F, E, B
-	while((SYSCTL_PRGPIO_R&0x32) != 0x32){}
+	while ((SYSCTL_PRGPIO_R&0x32) != 0x32) {}
 	
     // configure PF2 as GPIO
     Debug_Init();
@@ -46,6 +46,9 @@ int main(void)
 	ST7735_SetCursor(0,0); 
 	ST7735_OutString("EE445L Lab9");
 	
+	while (true) {}
+		
+	/*
     while (true) {
 		ST7735_PlotClear(1000,4000);  // TODO - make a better clear function
 		ST7735_SetCursor(0,1); 
@@ -56,11 +59,12 @@ int main(void)
 		ST7735_OutUDec(2500);		//Output temp maybe in float (use lab 3 or something)
 
 		
-		if(fifoFull){
+		if (fifoFull) {
 			for(int i = 0; i < FIFO_SIZE; i++){
 				//TODO Plot
 			}
 		}
     }
+	*/
 }
 

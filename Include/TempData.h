@@ -13,12 +13,14 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define FIFO_SIZE 64
-extern uint16_t currentCursor;
-extern uint16_t lastFifoValue;
-extern bool fifoFull;
+#define TEMP_DATA_SIZE 64
 
-int32_t FIFO_Push(int32_t value);
-int32_t FIFO_Pop(void);
+extern int32_t TempData[TEMP_DATA_SIZE];
+extern uint8_t TempDataLastIdx;
+extern uint8_t TempDataSize;
+extern int32_t TempDataMovingAverage;
+
+void TempData_Process(int32_t value);
+int32_t TempData_MovingAverage(void);
 
 #endif // ADC_H_
