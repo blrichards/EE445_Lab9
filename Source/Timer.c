@@ -7,8 +7,9 @@
 // Date of last revision: 9/19/2018
 // Hardware Configuration: N/A
 
+#include "ADC.h"
+#include "FIFO.h"
 #include "Timer.h"
-#include "AlarmClock.h"
 #include "tm4c123gh6pm.h"
 #include "ST7735.h"
 #include <stdint.h>
@@ -31,8 +32,6 @@ void SysTick_Init(void)
 
 void SysTick_Handler(void){
     NVIC_ST_RELOAD_R = 79999;     // reload value for high phase
-	PB7 ^= 0x80;
-	PF2 ^= 0x04;
 }
 
 void Timer0A_Init(uint32_t reloadValue)
@@ -58,20 +57,11 @@ void Timer0A_Init(uint32_t reloadValue)
 void Timer0A_Handler(void)
 {
     TIMER0_ICR_R = TIMER_ICR_TATOCINT; // acknowledge timer0A timeout
-	CurrentSeconds++;
-	
-	if((CurrentSeconds % 60) == 0){
-		CurrentSeconds = 0;
-		CurrentMinutes++;
-		if((CurrentMinutes % 60) == 0){
-			CurrentMinutes = 0;
-			CurrentHours++;
-			if((CurrentHours % 24) == 0)
-				CurrentHours = 0;
-		}
-	}
-	
-	AlarmClock_DisplayShouldUpdate(TimeChanged);
+	if(fifoFull) return;
+	int32_t currentValue = ADC0_InSeq3();
+			
+	if((currentCursor + 1) % FIFO_SIZE == lastFifoValue) fifoFull = true;
+	else FIFO_Push(currentValue);
 }
 
 void Timer1_Init(uint32_t reloadValue)
