@@ -9,7 +9,6 @@
 
 #include "ADC.h"
 #include "Debug.h"
-#include "FIFO.h"
 #include "Graphics.h"
 #include "PLL.h"
 #include "ST7735.h"
@@ -39,7 +38,7 @@ int main(void)
     // configure PF2 as GPIO
     Debug_Init();
     Output_Init();
-	Timer0A_Init(79999999);
+	Timer0A_Init(7999999);
 	ADC_Init();
     EnableInterrupts();
 	Graphics_ClearDisplay();

@@ -74,9 +74,9 @@ void Timer0A_Handler(void)
 	
 	currentValue -= min;
 	int32_t range = max - min;
-	int32_t yValue = ST7735_TFTHEIGHT - ((((double)currentValue)/((double)range)) * GRAPH_HEIGHT);
+	int32_t yValue = ST7735_TFTHEIGHT - (GRAPH_HEIGHT - ((((double)currentValue)/((double)range)) * GRAPH_HEIGHT));
 	buffer[screenCursor] = yValue;
-	ST7735_DrawPixel(screenCursor, yValue, ST7735_BLUE);
+	ST7735_DrawPixel(screenCursor, yValue, ST7735_WHITE);
 	screenCursor = (screenCursor + 1) % ST7735_TFTWIDTH;
 }
 

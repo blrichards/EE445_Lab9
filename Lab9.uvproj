@@ -480,11 +480,6 @@
               <FileType>1</FileType>
               <FilePath>.\Source\ADC.c</FilePath>
             </File>
-            <File>
-              <FileName>FIFO.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Source\FIFO.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -509,11 +504,6 @@
               <FileName>ADC.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Include\ADC.h</FilePath>
-            </File>
-            <File>
-              <FileName>FIFO.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Include\FIFO.h</FilePath>
             </File>
           </Files>
         </Group>
