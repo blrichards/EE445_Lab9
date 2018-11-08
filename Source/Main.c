@@ -47,9 +47,10 @@ int main(void)
 	ST7735_OutString("EE445L Lab9");
 	
     while (true) {
-		ST7735_PlotClear(1000,4000);  // Could make a better clear function
+		ST7735_PlotClear(1000,4000);  // TODO - make a better clear function
 		ST7735_SetCursor(0,1); 
-		ST7735_OutString("N=");		//Current ADC Value
+		ST7735_OutString("Current ADC Value = ");	//Current ADC Value
+		ST7735_OutUDec(0);							//TODO - add current ADC Value
 		ST7735_SetCursor(0,2); 
 		ST7735_OutString("T=");		//TODO Converted Temperature
 		ST7735_OutUDec(2500);		//Output temp maybe in float (use lab 3 or something)
