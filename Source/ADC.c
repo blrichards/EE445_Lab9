@@ -10,6 +10,8 @@
 #include "ADC.h"
 #include "tm4c123gh6pm.h"
 
+int32_t result;
+
 void ADC_Init(void)
 {
     SYSCTL_RCGCADC_R |= 0x0001; // 7) activate ADC0
@@ -43,7 +45,6 @@ void ADC_Init(void)
 // Output: 12-bit result of ADC conversion
 int32_t ADC0_InSeq3(void)
 {
-    int32_t result;
     ADC0_PSSI_R = 0x0008; // 1) initiate SS3
     while ((ADC0_RIS_R & 0x08) == 0) {} // 2) wait for conversion done
     // if you have an A0-A3 revision number, you need to add an 8 usec wait here
@@ -51,4 +52,9 @@ int32_t ADC0_InSeq3(void)
     ADC0_ISC_R = 0x0008; // 4) acknowledge completion
 
     return result;
+}
+
+int32_t ADC0_CurrentValue(void)
+{
+	return result;
 }

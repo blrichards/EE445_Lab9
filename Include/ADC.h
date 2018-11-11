@@ -14,5 +14,6 @@
 
 void ADC_Init(void);
 int32_t ADC0_InSeq3(void);
+int32_t ADC0_CurrentValue(void);
 
 #endif // ADC_H_
