@@ -146,7 +146,7 @@ uint32_t TxFifo_Size(void){
 // Initialize UART0
 // Baud rate is 115200 bits/sec
 // assuming 80 MHz bus clock
-void UART_Init(uint32_t priority){
+void UART_Init(){
   SYSCTL_RCGCUART_R |= 0x01;            // activate UART0
   SYSCTL_RCGCGPIO_R |= 0x01;            // activate port A
   RxFifo_Init();                        // initialize empty FIFOs
